@@ -1,0 +1,20 @@
+body {
+background-color: rgb(129, 247, 33);
+}
+
+h1, h2 {
+color: rgb(226, 175, 36);
+text-align:center;  
+border:2px solid rgb(197, 33, 202);  
+}
+
+p {
+color:blueviolet;
+font-family: Impact;
+font-size: 24px;   
+} 
+
+ul, li {
+color:rgb(255, 0, 0);
+font-family: courrier;
+}
