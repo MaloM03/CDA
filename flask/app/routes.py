@@ -9,6 +9,14 @@ def home():
 def about():
     return render_template('about.html')
 
+@app.route('/remeli')
+def remeli():
+    return render_template('remeli.html')
+
+@app.route('/manarino')
+def manarino():
+    return render_template('manarino.html')
+
 @app.route('/index')
 def index():
     srtResult='ATTENTION TEST'

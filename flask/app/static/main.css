@@ -1,6 +1,7 @@
 body {
     background-color: rgb(129, 247, 33);
     text-align: center;
+    cursor: url('balle.png'), auto;
     }
     
     h1, h2 {

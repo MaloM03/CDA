@@ -4,16 +4,16 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
-        <title>ATTENTION PAGE FAN MIKE</title>
+        <title>FAN PAGE TENNIS</title>
     </head>
     <body style="background-color: rgb(62, 219, 154);">
-        <h1>TEST ATTENTION MIKE</h1>
-        <a href="{{url_for('about') }}"> GO djokovic</a>
-        <p style="color:red;font-size: 60px;">TEXTE ROUGE ET GRAND !!!!</p>
+        <h1>TENNIS FAN</h1>
+
+        <p style="color:red;font-size: 60px;">LISTES DE PLUS GRAND JOUEUR DE L HISTOIRE DU TENNIS !!!!</p>
         <ul>
-            <li>PREMIER</li>
-            <li>DEUXIEME</li>
-            <li>TROISIEME</li>
+            <li><a href="{{url_for('about') }}"> GO Djokovic GOAT</a></li>
+            <li><a href="{{url_for('remeli') }}"> GO Remeli TENNIS </a></li>
+            <li><a href="{{url_for('manarino') }}"> GO DIVIN CHAUVE</a></li>
         </ul>
         <img src="{{url_for('static', filename='mikeGOAT.jpeg')}}" alt="MIKE" style="width:256px;height: auto;">
         <p>><a href="https://fr.wikipedia.org/wiki/Mike_Brant"> lien wikipedia</a></p>

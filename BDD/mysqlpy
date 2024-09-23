@@ -1,0 +1,68 @@
+import mysql.connector
+
+def connect_to_database(host, user, password, database):
+    """
+    Établit une connexion à une base de données MySQL.
+
+    :param host: Adresse du serveur MySQL.
+    :param user: Nom d'utilisateur MySQL.
+    :param password: Mot de passe MySQL.
+    :param database: Nom de la base de données.
+    :return: Objet de connexion MySQL ou None en cas d'erreur.
+    """
+    try:
+        connection = mysql.connector.connect(
+            host=host,
+            user=user,
+            password=password,
+            database=database
+        )
+        print("Connexion réussie à la base de données.")
+        return connection
+    except mysql.connector.Error as err:
+        print(f"Erreur lors de la connexion : {err}")
+        return None
+
+def print_table_data(connection, table_name):
+    """
+    Imprime les données d'une table dans le terminal.
+
+    :param connection: Objet de connexion MySQL.
+    :param table_name: Nom de la table à interroger.
+    """
+    if connection is None:
+        print("Pas de connexion à la base de données.")
+        return
+
+    try:
+        cursor = connection.cursor()
+        query = f"SELECT * FROM {table_name}"
+        cursor.execute(query)
+        rows = cursor.fetchall()
+
+        # Imprimer chaque ligne
+        for row in rows:
+            print(row)
+    except mysql.connector.Error as err:
+        print(f"Erreur lors de la récupération des données : {err}")
+    finally:
+        # Fermer le curseur
+        if cursor:
+            cursor.close()
+
+# Informations de connexion
+DB_HOST = 'localhost'
+DB_USER = 'root'
+DB_PASSWORD = 'uimm'    
+DB_NAME = 'test_db'
+TABLE_NAME = 'client'
+
+# Connexion à la base de données
+connection = connect_to_database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+
+# Imprimer les données de la table
+print_table_data(connect_to_database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME), TABLE_NAME)
+
+# Fermer la connexion
+if connection:
+    connection.close()
