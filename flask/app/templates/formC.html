@@ -6,24 +6,15 @@
     <title>Formulaire Flask</title>
 </head>
 <body>
-    <h1>Formulaire d'inscription pour devenir un REMELI/TENNIS FAN!</h1>
-    <form action="/retour" method="POST">
+    <h1>Se connecter en tant que REMELI/TENNIS FAN!</h1>
+    <form action="/retourC" method="POST">
         <label for="name">Nom:</label><br>
         <input type="text" id="name" name="name"><br><br>
         
         <label for="password">Mot de passe:</label><br>
         <input type="text" id="password" name="password"><br><br>
-
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email"><br><br>
-
-        <label for="joueurpref">Joueur Préféré:</label><br>
-        <input type="joueurpref" id="joueurpref" name="joueurpref"><br><br>
         
         <input type="submit" value="Envoyer">
-    </form>
-    <form action="{{ url_for('refresh') }}" method="POST">
-        <button type="submit">Rafrachir la page</button>
     </form>
 </body>
 </html>

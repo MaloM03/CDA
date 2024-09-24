@@ -2,12 +2,13 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import mysql.connector
+from datetime import datetime
 
 DB_HOST = 'localhost'
 DB_USER = 'root'
 DB_PASSWORD = 'uimm'    
 DB_NAME = 'test_db'
-TABLE_NAME = 'client'
+TABLE_NAME = 'membres'
 
 def envoyer_email(sender_email, receiver_email, subject, body, app_password):
     print("Création de l'email...")
@@ -21,7 +22,7 @@ def envoyer_email(sender_email, receiver_email, subject, body, app_password):
     try:
         print("Connexion au serveur SMTP...")
         server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()  # Activer TLS
+        server.starttls()
         
         print("Connexion avec les identifiants...")
         server.login(sender_email, app_password)
@@ -34,18 +35,9 @@ def envoyer_email(sender_email, receiver_email, subject, body, app_password):
         print(f"Erreur lors de l'envoi de l'email : {e}")
     
     finally:
-        server.quit()  # Fermer la connexion
+        server.quit()
 
 def connect_to_database(host, user, password, database):
-    """
-    Établit une connexion à une base de données MySQL.
-
-    :param host: Adresse du serveur MySQL.
-    :param user: Nom d'utilisateur MySQL.
-    :param password: Mot de passe MySQL.
-    :param database: Nom de la base de données.
-    :return: Objet de connexion MySQL ou None en cas d'erreur.
-    """
     try:
         connection = mysql.connector.connect(
             host=host,
@@ -59,10 +51,7 @@ def connect_to_database(host, user, password, database):
         print(f"Erreur lors de la connexion : {err}")
         return None
     
-def return_table_data(connection, table_name):
-    """
-    Récupère les données d'une table.
-    """
+def return_member(connection, table_name):
     if connection is None:
         print("Pas de connexion à la base de données.")
         return []
@@ -81,34 +70,44 @@ def return_table_data(connection, table_name):
             cursor.close()
 
 
-def add_client(connection, nom, numero, ville, code_postal, adresse):
-    """
-    Ajoute un nouveau client à la base de données.
-    
-    :param connection: L'objet de connexion MySQL.
-    :param nom: Le nom du client.
-    :param numero: Le numéro de téléphone du client.
-    :param ville: La ville du client.
-    :param code_postal: Le code postal du client.
-    :param adresse: L'adresse du client.
-    """
+def add_member(connection, username, password, email, joueur_pref):
     try:
         cursor = connection.cursor()
 
-        # Requête SQL pour insérer un nouveau client
+        date_creation = datetime.now()
+
         query = """
-        INSERT INTO client (nom, numéro, ville, code_postal, adresse) 
+        INSERT INTO membres (username, password, email, date_creation, joueur_pref) 
         VALUES (%s, %s, %s, %s, %s)
         """
-        # Exécution de la requête avec les valeurs
-        cursor.execute(query, (nom, numero, ville, code_postal, adresse))
-        
-        # Valider l'insertion dans la base de données
+        cursor.execute(query, (username, password, email, date_creation, joueur_pref))
         connection.commit()
 
-        print("Client ajouté avec succès.")
+        print("Membre ajouté avec succès.")
     except mysql.connector.Error as err:
-        print(f"Erreur lors de l'ajout du client : {err}")
+        print(f"Erreur lors de l'ajout du membre : {err}")
+    finally:
+        if cursor:
+            cursor.close()
+
+def get_user(connection, username, password):
+    try:
+        cursor = connection.cursor(dictionary=True)
+        
+        query = """
+        SELECT * FROM membres WHERE username = %s AND password = %s
+        """
+        cursor.execute(query, (username, password))
+        
+        user = cursor.fetchone()
+        if user:
+            return user
+        else:
+            return None
+
+    except mysql.connector.Error as err:
+        print(f"Erreur lors de la récupération de l'utilisateur : {err}")
+        return None
     finally:
         if cursor:
             cursor.close()

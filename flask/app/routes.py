@@ -23,6 +23,10 @@ def manarino():
 def myform():
     return render_template('form.html')
 
+@app.route('/myformC')
+def myformC():
+    return render_template('formC.html')
+
 @app.route('/index')
 def index():
     srtResult='ATTENTION TEST'
@@ -30,11 +34,11 @@ def index():
 
 @app.route('/retour', methods=['POST'])
 def submit():
-    # Récupérer les données du formulaire
     name = request.form['name']
+    password = request.form['password']
     email = request.form['email']
+    joueurpref = request.form['joueurpref']
     
-    # Traitement des données (ex: validation)
     if name and email:
         expediteur = "remelifanpage@gmail.com"
         destinataire = email
@@ -42,13 +46,29 @@ def submit():
         corps = f"Bienvenue {name} sur la page Remeli Tennis Fan"
         mot_de_passe_app = "jcnp oerh hygf hfkl"
         connection = connect_to_database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
-        add_client(connection, name, 123123123, 'Rennes', 35000, email)
-        envoyer_email(expediteur, destinataire, objet, corps, mot_de_passe_app)
+        add_member(connection, name, password, email, joueurpref)
         return render_template('retour.html', name=name, email=email)
         
     else:
         return "Veuillez remplir tous les champs."
 
+@app.route('/retourC', methods=['POST'])
+def submitC():
+    username = request.form['name']
+    password = request.form['password']
+    
+    if username and password:
+        connection = connect_to_database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+        resultat = get_user(connection, username, password)
+        if resultat:
+            print("vu mon gars")
+        else:
+            print("pas vu mon gars")
+        return render_template('retour.html', name=username, email=password)
+        
+    else:
+        return "Veuillez remplir tous les champs."
+    
 @app.route('/refresh', methods=['POST'])
 def refresh():
     print("Le bouton a été cliqué et le message est imprimé dans la console !")
@@ -57,7 +77,6 @@ def refresh():
 
 @app.route('/mydata')
 def mydata():
-    # Imprimer les données de la table
     connection = connect_to_database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
-    data = return_table_data(connection, TABLE_NAME)
+    data = return_member(connection, TABLE_NAME)
     return render_template('mydata.html', data=data)
