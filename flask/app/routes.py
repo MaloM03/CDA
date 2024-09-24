@@ -27,6 +27,10 @@ def myform():
 def myformC():
     return render_template('formC.html')
 
+@app.route('/myformF')
+def myformF():
+    return render_template('formF.html')
+
 @app.route('/index')
 def index():
     srtResult='ATTENTION TEST'
@@ -61,13 +65,22 @@ def submitC():
         connection = connect_to_database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
         resultat = get_user(connection, username, password)
         if resultat:
-            print("vu mon gars")
+            return render_template('retour.html', name=username, email=password)
         else:
-            print("pas vu mon gars")
-        return render_template('retour.html', name=username, email=password)
-        
+            return render_template('formC.html')      
     else:
         return "Veuillez remplir tous les champs."
+    
+@app.route('/retourF', methods=['POST'])
+def submitF():
+    objet = request.form['objet']
+    corps = request.form['coprs']
+    
+    connection = connect_to_database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+    
+    newsletters(connection, objet, corps)
+    return render_template('home.html')
+    
     
 @app.route('/refresh', methods=['POST'])
 def refresh():

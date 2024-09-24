@@ -3,12 +3,14 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import mysql.connector
 from datetime import datetime
+import os
 
-DB_HOST = 'localhost'
-DB_USER = 'root'
-DB_PASSWORD = 'uimm'    
-DB_NAME = 'test_db'
-TABLE_NAME = 'membres'
+DB_HOST = os.getenv('DB_HOST')
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_NAME = os.getenv('DB_NAME')
+TABLE_NAME = os.getenv('TABLE_NAME')
+
 
 def envoyer_email(sender_email, receiver_email, subject, body, app_password):
     print("Création de l'email...")
@@ -108,6 +110,24 @@ def get_user(connection, username, password):
     except mysql.connector.Error as err:
         print(f"Erreur lors de la récupération de l'utilisateur : {err}")
         return None
+    finally:
+        if cursor:
+            cursor.close()
+
+def newsletters(connection, objet, corps):
+    try:
+        cursor = connection.cursor()
+
+        query = "SELECT email FROM membres"
+        cursor.execute(query)
+
+        for (email,) in cursor.fetchall():
+
+            envoyer_email("remelifanpage@gmail.com", email, objet, corps, "jcnp oerh hygf hfkl")
+
+        print("Traitement terminé.")
+    except mysql.connector.Error as err:
+        print(f"Erreur lors de la récupération des emails : {err}")
     finally:
         if cursor:
             cursor.close()
