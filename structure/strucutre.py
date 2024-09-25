@@ -1,11 +1,14 @@
 import mysql.connector
 import os
+import getpass
 
 # RECUPERATION VAR ENV
 DB_HOST = os.getenv('DB_HOST')
 DB_USER = os.getenv('DB_USER')
 DB_NAME = os.getenv('DB_NAME')
 TABLE_NAME = os.getenv('TABLE_NAME')
+
+#====================================================
   
 def connect_to_database(host, user, password, database):
     global g_mydb
@@ -17,12 +20,12 @@ def connect_to_database(host, user, password, database):
             database=database
         )
         print("Connexion réussie à la base de données.")
-        print(g_mydb)
-        return True
     except mysql.connector.Error as err:
         print(f"Erreur lors de la connexion : {err}")
         return False
-    
+    finally:
+        return True
+
 def display_table(table_name):
     try:
         cursor = g_mydb.cursor()
@@ -37,10 +40,11 @@ def display_table(table_name):
     finally:
         if cursor:
             cursor.close()
-        
-if __name__=="__main__":
-    password = input("Attente mot de passe de la BDD : ")
 
+#====================================================
+
+if __name__=="__main__":
+    password = getpass.getpass("Attente mot de passe de la BDD : ")
     if connect_to_database(DB_HOST, DB_USER, password, DB_NAME):
         display_table(TABLE_NAME)
     else:
