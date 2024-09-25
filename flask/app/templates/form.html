@@ -2,23 +2,24 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulaire Flask</title>
 </head>
-<body>
+<body style="background-color: rgb(62, 219, 154);">
     <h1>Formulaire d'inscription pour devenir un REMELI/TENNIS FAN!</h1>
     <form action="/retour" method="POST">
         <label for="name">Nom:</label><br>
-        <input type="text" id="name" name="name"><br><br>
+        <input type="text" id="name" name="name" size="100"><br><br>
         
         <label for="password">Mot de passe:</label><br>
-        <input type="text" id="password" name="password"><br><br>
+        <input type="text" id="password" name="password" size="100"><br><br>
 
         <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email"><br><br>
+        <input type="email" id="email" name="email" size="100"><br><br>
 
         <label for="joueurpref">Joueur Préféré:</label><br>
-        <input type="joueurpref" id="joueurpref" name="joueurpref"><br><br>
+        <input type="joueurpref" id="joueurpref" name="joueurpref" size="100"><br><br>
         
         <input type="submit" value="Envoyer">
     </form>

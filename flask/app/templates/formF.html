@@ -2,17 +2,18 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulaire Flask</title>
 </head>
-<body>
+<body style="background-color: rgb(62, 219, 154);">
     <h1>Envoyer une newsletter a tous les REMELI/TENNIS FAN!!!!!</h1>
     <form action="/retourF" method="POST">
         <label for="objet">Objet:</label><br>
-        <input type="text" id="objet" name="objet"><br><br>
+        <input type="text" id="objet" name="objet" size="50" style="height: 25px;"><br><br>
         
-        <label for="coprs">Coprs:</label><br>
-        <input type="text" id="coprs" name="coprs"><br><br>
+        <label for="coprs">Contenu:</label><br>
+        <input type="text" id="coprs" name="coprs" size="150" style="height: 50px;"><br><br>
         
         <input type="submit" value="Envoyer">
     </form>
