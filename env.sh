@@ -1,19 +1,4 @@
 #!/bin/bash
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Définir et exporter la variable d'environnement USER_NAME
 export DB_HOST='localhost'
 export DB_USER='root'
