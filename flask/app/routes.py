@@ -75,11 +75,13 @@ def submitC():
 def submitF():
     objet = request.form['objet']
     corps = request.form['coprs']
+    if objet == "" or corps == "":
+        return "Veuillez remplir tous les champs."
+    else:
+        connection = connect_to_database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
     
-    connection = connect_to_database(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
-    
-    newsletters(connection, objet, corps)
-    return render_template('home.html')
+        newsletters(connection, objet, corps)
+        return render_template('home.html')
     
     
 @app.route('/refresh', methods=['POST'])
