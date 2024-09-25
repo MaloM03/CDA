@@ -1,6 +1,7 @@
 import mysql.connector
 import os
 import getpass
+import time
 
 # RECUPERATION VAR ENV
 DB_HOST = os.getenv('DB_HOST')
@@ -14,6 +15,15 @@ class MySqlBdd:
     def __init__(self, user):
         self.user = user
         self.g_mydb = None
+
+    def __del__(self):
+        print("3...")
+        time.sleep(0.75)
+        print("2...")
+        time.sleep(0.75)
+        print("1...")
+        time.sleep(0.75)
+        print("0... Objet détruit fin du programme !")
 
     def connect_to_database(self, password):
         try:
@@ -48,9 +58,6 @@ class MySqlBdd:
     def disconnect(self):
         self.g_mydb.close()
 
-    def __del__(self):
-        print("OBJET détruit")
-
 #====================================================
 
 if __name__=="__main__":
@@ -62,9 +69,9 @@ if __name__=="__main__":
     if MyDB.connect_to_database(password):
         MyDB.display_table(TABLE_NAME)
         MyDB.disconnect()
-        del MyDB
+        #del MyDB
     else:
-        print("dommage")
-    print("=============")
+        print("Password incorrect")
+    print("=============================")
 
     
