@@ -118,12 +118,13 @@ def newsletters(connection, objet, corps):
     try:
         cursor = connection.cursor()
 
-        query = "SELECT email FROM membres"
+        query = "SELECT email, username FROM membres"
         cursor.execute(query)
 
-        for (email,) in cursor.fetchall():
+        for (email, username) in cursor.fetchall():
 
-            envoyer_email("remelifanpage@gmail.com", email, objet, corps, "jcnp oerh hygf hfkl")
+            corps_personnalise = replace_name(corps, username)
+            envoyer_email("remelifanpage@gmail.com", email, objet, corps_personnalise, "jcnp oerh hygf hfkl")
 
         print("Traitement terminé.")
     except mysql.connector.Error as err:
@@ -131,3 +132,6 @@ def newsletters(connection, objet, corps):
     finally:
         if cursor:
             cursor.close()
+
+def replace_name(text, name):
+    return text.replace('%name%', name)
