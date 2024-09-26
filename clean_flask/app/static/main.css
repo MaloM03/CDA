@@ -1,0 +1,24 @@
+body {
+    background-color: rgb(101, 103, 103);
+    text-align: center;
+    }
+    
+    h1, h2 {
+    color: rgb(226, 175, 36);
+    text-align:center;  
+    border:2px solid rgb(255, 255, 255);  
+    }
+    
+    p {
+    color:rgb(255, 255, 255);
+    font-family: Impact;
+    font-size: 16px;   
+    } 
+    
+    ul, li {
+    list-style-position: inside;
+    text-align: center; 
+    color:rgb(220, 211, 222);
+    font-family: courrier;
+    
+    }

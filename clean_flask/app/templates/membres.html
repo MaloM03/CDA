@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon site classic</title>
+</head>
+<body>
+    <h1>Listes des membres de la base de données</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                {% for column in data[0] %}
+                    <th>{{ loop.index }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+                <tr>
+                    {% for value in row %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
